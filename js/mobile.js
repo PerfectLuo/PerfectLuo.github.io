@@ -16,7 +16,6 @@ define([], function(){
 	//第一步 -- 组合
 	var combine = function(){
 		if($tag){
-			console.log($tag)
 			document.getElementById("js-mobile-tagcloud").innerHTML = $tag.innerHTML;
 		}
 		if($aboutme){

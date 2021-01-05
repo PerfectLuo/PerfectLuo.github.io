@@ -6,7 +6,7 @@
     <meta name="referrer" content="origin">
     <meta http-equiv="Cache-Control" content="no-transform">
     <meta http-equiv="Cache-Control" content="no-siteapp">
-    <title>menu.archive</title>
+    <title>Object.create()和new object()和{}的区别</title>
 
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/LongCang.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Monda.css">
@@ -17,56 +17,123 @@
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/Rosario.css">
     <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/font/UbuntuMono.css">
 
-    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/post.css">
+    
+        <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/css/normal.css">
+    
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/js/jquery-3.4.1.min.js"></script>
+
 <meta name="generator" content="Hexo 5.3.0"><link rel="alternate" href="/atom.xml" title="罗臣浩的博客" type="application/atom+xml">
 </head>
 <body>
     <a id="cover"></a>
     <div id="header">
-    <div class="header" >
+    <div class="header">
         <div class="vertical">
             <div class="inner">
-                <h1 class="header-title"></h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
-                <!--
-                <h1 class="header-subtitle"></h1>
-                <p class="header-subinfo"></p>
-                -->
+                <h1 class="header-subtitle">Object.create()和new object()和{}的区别</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2021-01-04
+                        </span>
+                        
+                            <span id="/2021/01/04/Object-create-和new-object-和-的区别/" class="leancloud_visitors" data-flag-title="Object.create()和new object()和{}的区别">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2021/01/04/Object-create-和new-object-和-的区别/"></span>
+                        </span>  
+                    </p>                 
+                </div>
             </div>
         </div>
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <span class="hidden">Scroll Down</span>
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
+        <canvas id="articleHeaderCanvas"></canvas>
     </div>
 </div>
     <div id="container">
     <div id="content">
-          
-    <div class="articles-year">
-        <h2>2021</h2>
-        <ul class="list">
+        <div id="article">
+    <div class="toc"></div>
+    <div class="article-body">
+        <h2 id="Object-create-介绍"><a href="#Object-create-介绍" class="headerlink" title="Object.create()介绍"></a><strong>Object.create()介绍</strong></h2><blockquote>
+<p>Object.Create(null)创建的对象是一个空对象吗，在该对象上没有继承Object.prototype原型链上的属性或者方法，例如：toString()、hasOwnPropertiesObject();</p>
+</blockquote>
+<p>Object.create()方法接受两个参数：Object.create(obj,propertiesObject)</p>
+<p>obj：一个对象，应该是新创建的对象的原型。</p>
+<p>propertiesObject：非必填。该参数对象是一组属性和值，该对象的属性名称将是新创建的对象的属性名称，值是属性描述符（这些属性描述的结构与Object.defineProperties()的第二个参数意义）。注意：该参数名称不能是undefined，另外只有对象中自身拥有的可枚举的属性才有效，也就是说该对象的原型链上属性是无效的。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> object = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.prototype,&#123;</span><br><span class="line">    <span class="comment">// foo会成为所创建对象的数据属性</span></span><br><span class="line">    foo:&#123;</span><br><span class="line">        writable:<span class="literal">true</span>,</span><br><span class="line">        configurable:<span class="literal">true</span>,</span><br><span class="line">        value: <span class="string">&quot;hello&quot;</span> </span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// bar会成为所创建对象的访问器属性</span></span><br><span class="line">    bar:&#123;</span><br><span class="line">        configurable: <span class="literal">false</span>,</span><br><span class="line">        get: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="keyword">return</span> <span class="number">10</span> &#125;,</span><br><span class="line">        set: <span class="function"><span class="keyword">function</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">          <span class="built_in">console</span>.log(<span class="string">&quot;Setting `o.bar` to&quot;</span>, value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(object);<span class="comment">//&#123;foo:&#x27;hello&#x27;&#125;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test1 = <span class="built_in">Object</span>.create(<span class="literal">null</span>) ;</span><br><span class="line"><span class="built_in">console</span>.log(test1)    <span class="comment">//&#123;&#125;</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>因为在bar中设置了configurable，使用set、get方法默认都不起作用，所以bar值无法赋值或者获取</p>
+<p>这里的object对象继承了Object.prototype   Object上的原型方法</p>
+<p>我们可以通过  对象  _ proto _ 属性来获取对象原型链上的方法</p>
+</blockquote>
+<h2 id="new-Object"><a href="#new-Object" class="headerlink" title="new Object()"></a>new Object()</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = &#123;<span class="attr">x</span>:<span class="number">1</span>&#125;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="keyword">new</span> <span class="built_in">Object</span>(test1)</span><br><span class="line"><span class="keyword">var</span> test3 = <span class="built_in">Object</span>.create(test1)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(test3)   <span class="comment">//&#123;&#125; __proto__:&#123;x:&#x27;1&#x27;&#125;</span></span><br><span class="line"><span class="keyword">var</span> test4 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">　　</span><br><span class="line">&#125;</span><br><span class="line">test4.prototype = test1;</span><br><span class="line"><span class="keyword">var</span> test5 = <span class="keyword">new</span> test4();</span><br><span class="line"><span class="built_in">console</span>.log(test5)</span><br><span class="line"><span class="built_in">console</span>.log(test5.__proto__ === test3.__proto__);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test2);<span class="comment">//&#123;x:1&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id=""><a href="#" class="headerlink" title="{}"></a>{}</h2><p>{}javascript对象字面量创建的形式，其本质和new Object()并无区别，默认都是继承了Object对象上的prototype</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test1 = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> test2 = <span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"><span class="keyword">var</span> test3 = <span class="built_in">Object</span>.create(<span class="built_in">Object</span>.prototype)</span><br><span class="line"><span class="keyword">var</span> test4 = <span class="built_in">Object</span>.create(<span class="literal">null</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__ === <span class="built_in">Object</span>.prototype);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test2.__proto__ === <span class="built_in">Object</span>.prototype);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__ === test2.__proto__);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__ === test3.__proto__);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test2.__proto__ === test3.__proto__);<span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__ === test4.__proto__);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(test2.__proto__ === test4.__proto__);<span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(test3.__proto__ === test4.__proto__);<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">使用<span class="built_in">Object</span>.create()是将对象继承到原型链上，然后可以通过对象实例的__proto__属性进行访问原型链上的属性</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> test = <span class="built_in">Object</span>.create(&#123;<span class="attr">x</span>:<span class="number">123</span>,<span class="attr">y</span>:<span class="number">456</span>&#125;)</span><br><span class="line"><span class="built_in">console</span>.log(test)   <span class="comment">//&#123;&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(test.x);<span class="comment">//123</span></span><br><span class="line"><span class="built_in">console</span>.log(test.__proto__.x);<span class="comment">//123</span></span><br><span class="line"><span class="built_in">console</span>.log(test.__proto__.x === test.x);<span class="comment">//true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> test1 = <span class="keyword">new</span> <span class="built_in">Object</span>(&#123;<span class="attr">x</span>:<span class="number">123</span>,<span class="attr">y</span>:<span class="number">345</span>&#125;);</span><br><span class="line"><span class="built_in">console</span>.log(test1);<span class="comment">//&#123;x:123,y:345&#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.x);<span class="comment">//123</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__.x);<span class="comment">//undefined</span></span><br><span class="line"><span class="built_in">console</span>.log(test1.__proto__.x === test1.x);<span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+
+        <p class="suffix-end">__END__</p>
+        <div class="suffix-box">
+            <div class="suffix-box-left">
+                <img src="https://cdn.jsdelivr.net/gh/first19326/hexo-liveforcode@master/static/image/sidebar/avatar.jpg" alt="罗臣浩的博客">
+            </div>
+            <div class="suffix-box-right">
+                <span class="suffix-box-title">文章作者</span>：罗臣浩的博客
+                <br>
+                <span class="suffix-box-title">文章出处</span>：<a href="/2021/01/04/Object-create-%E5%92%8Cnew-object-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB/" target="_blank">Object.create()和new object()和{}的区别</a>
+                <br>
+                <span class="suffix-box-title">作者签名</span>：简单地活着, 肆意又精彩.
+                <br>
+                <!-- <span class="suffix-box-title">suffix.theme</span>：<a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a> -->
+                <!-- <br> -->
+                <span class="suffix-box-title">版权声明</span>：文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+                <br>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+    </div>
+    <div class="article-footer">
+        
+            <div class="category">
+                分类：
+                
+                    <a href="/categories/js/">js</a>
+                
+            </div>
+        
+        
+            <div class="tag">
+                标签：
+                
+                    <a href="/tags/Object/">Object</a>
+                
+            </div>
+        
+        <div class="article-prev-next">
             
-                <li>
-                    <span class="date">2021/01/04</span>
-                    <a href="/2021/01/04/Object-create-%E5%92%8Cnew-object-%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB/" title="Object.create()和new object()和{}的区别">    
-                        <span>Object.create()和new object()和{}的区别</span>
-                    </a>
-                </li>
             
-                <li>
-                    <span class="date">2021/01/04</span>
-                    <a href="/2021/01/04/proxy/" title="es6之proxy详解">    
-                        <span>es6之proxy详解</span>
-                    </a>
-                </li>
+                <a href="/2021/01/04/proxy/" class="next-prefix">» </a> 下一篇：    <a href="/2021/01/04/proxy/" title="发布于 2021-01-04 01:33">es6之proxy详解</a>
             
-        </ul>
+        </div>
+    </div>
+    
+    <div class="article-comments">
+        <div class="comments-title">
+            评论列表
+        </div>
+        <div class="comments-content">
+        </div>
     </div>
 
+</div>
 
     </div>
 </div>
